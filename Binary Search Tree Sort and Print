@@ -1,0 +1,51 @@
+//call to insert course into the tree
+void BinarySearchTree::Insert(Course course) {
+	//if root is null, root becomes new course node
+	if (root == nullptr) {
+		root = new Node(course);
+	}
+	//else use addNode
+	else {
+		addNode(root, course);
+	}
+}
+
+//adding a course to the tree
+void BinarySearchTree::addNode(Node* node, Course course) {
+	//compare courseNumber to determine where node will go in the tree
+	if (node->course.courseNumber.compare(course.courseNumber) > 0 && node != nullptr) {
+		//looks at left first. if not left, node becomes left
+		if (node->left == nullptr) {
+			node->left = new Node(course);
+			return;
+		}
+		//else recurse down to left node
+		else {
+			this->addNode(node->left, course);
+		}
+	}
+	//else if statement
+	else if (node->course.courseNumber.compare(course.courseNumber) < 0 && node != nullptr) {
+		//if no right node, create one
+		if (node->right == nullptr) {
+			node->right = new Node(course);
+			return;
+		}
+		//otherwise recurse right
+		else {
+			this->addNode(node->right, course);
+		}
+	}
+}
+
+//fucntion for printed binarysearch tree in order
+void BinarySearchTree::inOrder(Node* node) {
+	//if not is not equal to null
+	if (node != nullptr) {
+		inOrder(node->left);
+		//output course information
+		cout << node->course.courseNumber << ", " << node->course.courseName << endl;
+		inOrder(node->right);
+	}
+}
+
